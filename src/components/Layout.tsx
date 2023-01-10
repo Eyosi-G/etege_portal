@@ -10,7 +10,7 @@ const Layout = (props: IProps) => {
     return (
         <div className=' bg-white'>
             <NavBar />
-            <div className='px-5 md:px-10 grid grid-cols-12 gap-2 mt-5'>
+            <div className='px-5 md:px-10 grid grid-cols-12 gap-3 mt-5'>
                 <div className='col-span-full md:col-span-3 '>
                     <SideBar />
                 </div>
