@@ -1,12 +1,10 @@
 import React from 'react'
+import { Outlet } from 'react-router-dom'
 import NavBar from './NavBar'
 import SideBar from './SideBar'
 
-interface IProps {
-    children: React.ReactNode,
-
-}
-const Layout = (props: IProps) => {
+// is
+const Layout = () => {
     return (
         <div className=' bg-white'>
             <NavBar />
@@ -15,7 +13,7 @@ const Layout = (props: IProps) => {
                     <SideBar />
                 </div>
                 <div className='col-span-full md:col-span-9 '>
-                    {props.children}
+                    <Outlet />
                 </div>
             </div>
         </div>

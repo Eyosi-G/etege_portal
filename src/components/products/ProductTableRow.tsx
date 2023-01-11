@@ -1,9 +1,11 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import Chip from '../Chip'
 import DeleteButton from '../DeleteButton'
 import EditButton from '../EditButton'
 
 const ProductTableRow = () => {
+    const navigate = useNavigate()
     return (
         <div className='grid grid-cols-12 mt-5 gap-2'>
             <div className='col-span-4 flex space-x-3'>
@@ -25,7 +27,7 @@ const ProductTableRow = () => {
             <div className='text-sm'>30</div>
             <div className='text-sm col-span-2'>SKLTV4532</div>
             <div className='col-span-2 flex  space-x-2 h-fit text-xs text-gray-700 font-semibold'>
-                <button className='px-3 py-1 rounded-lg bg-gray-300 capitalize'>edit</button>
+                <button onClick={()=> navigate("/products/1/edit")} className='px-3 py-1 rounded-lg bg-gray-300 capitalize'>edit</button>
                 <button className='px-3 py-1 rounded-lg bg-gray-300 capitalize'>delete</button>
             </div>
         </div>
