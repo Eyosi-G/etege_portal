@@ -8,17 +8,17 @@ const ProfileSetting = () => {
                 <div className='col-span-7'>
                     <div className="text-lg mb-2">Company Information</div>
                     <div className='space-y-3'>
-                        <InputField title='Name' isRequired />
-                        <InputField title='Address' isRequired />
+                        {/* <InputField title='Name' isRequired />
+                        <InputField title='Address' isRequired /> */}
                     </div>
                 </div>
                 <div className='col-span-5'>
                     <div>
                         <div className="text-lg mb-2">Contact Person</div>
                         <div className='space-y-3'>
-                            <InputField title='Full Name' isRequired />
+                            {/* <InputField title='Full Name' isRequired />
                             <InputField title='Email' isRequired />
-                            <InputField title='Phone' isRequired />
+                            <InputField title='Phone' isRequired /> */}
                         </div>
                         <div className='flex justify-end items-center space-x-5 h-fit my-2'>
                             <button className='px-3 py-2 rounded-lg border border-gray-300 '>Discard</button>

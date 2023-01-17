@@ -1,22 +1,28 @@
 import React from 'react'
+import { IProduct } from '../../service/api/productService'
 import Paginator from '../Paginator'
 import ProductTableRow from './ProductTableRow'
 
-const ProductsTable = () => {
+interface IProps {
+    products: IProduct[]
+}
+const ProductsTable = (props: IProps) => {
+    const { products } = props
     return (
-        <div className='w-full mt-3 border border-gray-300 rounded-lg p-4'>
-            <div className='grid grid-cols-12 uppercase text-sm text-gray-500 gap-2  border-b border-b-gray-300 p-3'>
-                <div className='col-span-4'>Product Details</div>
-                <div className='col-span-2'>Category</div>
-                <div className=''>Price</div>
-                <div className=''>Stock</div>
-                <div className='col-span-2 '>SKU</div>
-                <div className='col-span-2'>Actions</div>
+        <div className='w-full mt-3 border border-gray-300 rounded-lg p-4 gap-2'>
+            <div className='grid grid-cols-10 uppercase text-sm text-gray-500 gap-3  border-b border-b-gray-300 p-3'>
+                <div className=''>Thumbnail</div>
+                <div className='col-span-2 text-center'>Product Name</div>
+                <div className='col-span-2 text-center'>Category</div>
+                <div className='col-span-2 text-center'>Compare at Price</div>
+                <div className='text-center'>Price</div>
+                <div className='text-center col-span-2'>Actions</div>
             </div>
             <div className=''>
-                <ProductTableRow />
-                <ProductTableRow />
-                <ProductTableRow />
+                {products.map(product => {
+                    return <ProductTableRow  product={product}/>
+                })}
+
             </div>
         </div>
 

@@ -12,6 +12,7 @@ import OrderDetailPage from "./pages/OrderDetailPage";
 import OrdersPage from "./pages/OrdersPage";
 import ProductsPage from "./pages/ProductsPage";
 import ProfileSetting from "./pages/settings/ProfileSetting";
+import ProfiltSetting from "./pages/settings/ProfiltSetting";
 import SecuritySetting from "./pages/settings/SecuritySetting";
 import SuppliersPage from "./pages/SuppliersPage";
 
@@ -19,7 +20,6 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <Layout />,
-    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -29,18 +29,18 @@ export const router = createBrowserRouter([
         path: "categories",
         element: <CategoriesPage />
       },
-      {
-        path: "/suppliers",
-        element: <SuppliersPage />
-      },
-      {
-        path: "/suppliers/new",
-        element: <AddEditSupplierPage />
-      },
-      {
-        path: "/suppliers/:id/edit",
-        element: <AddEditSupplierPage />
-      },
+      // {
+      //   path: "/suppliers",
+      //   element: <SuppliersPage />
+      // },
+      // {
+      //   path: "/suppliers/new",
+      //   element: <AddEditSupplierPage />
+      // },
+      // {
+      //   path: "/suppliers/:id/edit",
+      //   element: <AddEditSupplierPage />
+      // },
       {
         path: "/orders",
         element: <OrdersPage />
@@ -59,19 +59,23 @@ export const router = createBrowserRouter([
       },
       {
         path: "/products/:id/edit",
-        element: <AddEditProductPage />
-      }, 
+        element: <AddEditProductPage isEdit />
+      },
       {
         path: "/settings",
         element: <SettingLayout />,
         children: [
-          { 
+          {
             index: true,
-            element: <ProfileSetting />
+            element: <SecuritySetting />
           },
           {
-            path: "security",
-            element: <SecuritySetting />
+            path: "profile",
+            element: <ProfileSetting />,
+          },
+          {
+            path: "profit",
+            element: <ProfiltSetting />
           }
         ]
       }
@@ -82,4 +86,8 @@ export const router = createBrowserRouter([
     element: <LoginPage />
   },
 
+  {
+    path: "*",
+    element: <ErrorPage />
+  }
 ]);

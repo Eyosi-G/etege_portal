@@ -18,7 +18,7 @@ const OrdersPage = () => {
                         </svg>
                     }
                 />
-                 <OrderSummerizeCard
+                <OrderSummerizeCard
                     amount={20}
                     text="Processing"
                     color='bg-amber-200'
@@ -38,7 +38,7 @@ const OrdersPage = () => {
                         </svg>
                     }
                 />
-                 <OrderSummerizeCard
+                <OrderSummerizeCard
                     amount={20}
                     text="Cancelled"
                     color='bg-red-200'
@@ -59,15 +59,15 @@ const OrdersPage = () => {
             </div>
             <div className='mb-3 mt-2 space-x-5 text-sm flex items-center'>
                 <button className='px-2 py-1 rounded-lg bg-gray-200 '>All Orders</button>
+                <button className='px-2 py-1 rounded-lg border border-gray-200'>Pending</button>
                 <button className='px-2 py-1 rounded-lg border border-gray-200'>Processing</button>
-                <button className='px-2 py-1 rounded-lg border border-gray-200'>Ordered</button>
                 <button className='px-2 py-1 rounded-lg border border-gray-200'>Delivered</button>
                 <button className='px-2 py-1 rounded-lg border border-gray-200'>Cancelled</button>
                 <button className='px-2 py-1 rounded-lg border border-gray-200'>New</button>
             </div>
             <OrdersTable />
             <div className='flex justify-center'>
-                <Paginator />
+                {/* <Paginator /> */}
             </div>
         </div>
     )

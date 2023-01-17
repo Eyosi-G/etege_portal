@@ -6,7 +6,7 @@ const SupplierTableRow = () => {
     const navigate = useNavigate()
     return (
         <div className='grid grid-cols-7  gap-2 mt-5 text-sm hover:cursor-pointer p-2 rounded-lg'>
-            <div className='font-semibold truncate'>Addis Alem Tibeb</div>
+            <div className='truncate'>Addis Alem Tibeb</div>
             <div className='capitalize'>Hiwot Girma</div>
             <div>hiwot@gmail.com</div>
             <div>0911139084</div>

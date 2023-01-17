@@ -1,11 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Layout from '../components/Layout'
 import Paginator from '../components/Paginator'
 import ProductsTable from '../components/products/ProductsTable'
+import SuccessDialog from '../components/SuccessDialog'
+import { useDeleteProductMutation, useFetchProductsQuery } from '../service/api/productService'
 
 const ProductsPage = () => {
+    const [page, setPage] = useState(0)
+    const limit = 5;
+
     const navigate = useNavigate()
+    const { data, isSuccess } = useFetchProductsQuery()
+    const [_, { isSuccess: isProductDeleteSuccess }] = useDeleteProductMutation({
+        fixedCacheKey: "delete-product"
+    })
     return (
         <div className='pb-5'>
             <div className='flex justify-between items-center'>
@@ -19,10 +28,12 @@ const ProductsPage = () => {
                     <input className='ml-4 outline-none p-1 w-full bg-white text-sm' placeholder='Search' />
                 </div>
             </div>
-            <ProductsTable />
-            <div className='flex justify-center'>
-                <Paginator />
-            </div>
+            {isProductDeleteSuccess && <SuccessDialog message='Product successflly deleted' />}
+
+            {isSuccess && <ProductsTable products={data.products} />}
+            {isSuccess && <div className='flex justify-center'>
+                <Paginator updatePage={(newPage) => setPage(newPage)} total={data.total} limit={limit} page={page} />
+            </div>}
         </div>
     )
 }

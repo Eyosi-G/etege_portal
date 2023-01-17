@@ -21,7 +21,7 @@ const SuppliersPage = () => {
             </div>
             <SuppliersTable />
             <div className='flex justify-center'>
-                <Paginator />
+                {/* <Paginator /> */}
             </div>
         </div>
     )

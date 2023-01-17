@@ -1,34 +1,50 @@
-import React from 'react'
+import React, { useState } from 'react'
+import ReactQuill from 'react-quill'
 import { useNavigate } from 'react-router-dom'
+import { IProduct, useDeleteProductMutation } from '../../service/api/productService'
 import Chip from '../Chip'
 import DeleteButton from '../DeleteButton'
 import EditButton from '../EditButton'
+import 'react-quill/dist/quill.bubble.css';
+import { baseUrl, imageBaseUrl } from '../../service/common'
+import Modal from '../Modal'
+import Confirmation from '../Confirmation'
+import GrayBg from '../GrayBg'
+import SuccessDialog from '../SuccessDialog'
 
-const ProductTableRow = () => {
+interface IProps {
+    product: IProduct
+}
+const ProductTableRow = (props: IProps) => {
+    const { product } = props;
     const navigate = useNavigate()
+    const [openConfirmation, setConfirmation] = useState(false)
+    const [handleDeleteProduct] = useDeleteProductMutation({
+        fixedCacheKey: "delete-product"
+    })
     return (
-        <div className='grid grid-cols-12 mt-5 gap-2'>
-            <div className='col-span-4 flex space-x-3'>
-                <div className='w-[40%] h-28'>
-                    <img className='h-full w-full object-cover object-top rounded-lg' src="https://cdn.shopify.com/s/files/1/0564/3337/7459/products/YUMIDRESS_1_1280x.jpg?v=1672120192" />
-                </div>
-                <div className='w-[60%]'>
-                    <div className='truncate font-bold capitalize'>Black Menen Tilf</div>
-                    <div className=' text-gray-400 text-sm text-justify line-clamp-4'>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas pretium vitae quam et laoreet. Duis in tortor eu justo tincidunt dignissim ac sed nisl.
-                    </div>
-                </div>
+        <div className='grid grid-cols-10 mt-5 gap-3 items-center '>
+            <Modal open={openConfirmation} backdrop={<GrayBg />}>
+                <Confirmation handleCancel={() => { setConfirmation(false) }} handleDelete={() => {
+                    handleDeleteProduct(product.id)
+                    setConfirmation(false)
+                }} />
+            </Modal>
+            <div className=''>
+                <img className='overflow-hidden w-full h-28 block object-cover object-top rounded-lg ' src={`${imageBaseUrl}${product.images[0]}`} />
             </div>
-            <div className='col-span-2 flex h-fit space-x-2 items-center'>
-                <Chip label='Shifon' />
-                <Chip label='Tilf' />
+            <div className='capitalize col-span-2 text-center'>{product.name.toLowerCase()}</div>
+            <div className='col-span-2 flex justify-center h-fit space-x-2 items-center'>
+                {product.categories.map(category => <Chip label={category.name} />)}
             </div>
-            <div className='text-sm'>1200 ETB</div>
-            <div className='text-sm'>30</div>
-            <div className='text-sm col-span-2'>SKLTV4532</div>
-            <div className='col-span-2 flex  space-x-2 h-fit text-xs text-gray-700 font-semibold'>
-                <button onClick={()=> navigate("/products/1/edit")} className='px-3 py-1 rounded-lg bg-gray-300 capitalize'>edit</button>
-                <button className='px-3 py-1 rounded-lg bg-gray-300 capitalize'>delete</button>
+            <div className='text-sm col-span-2 text-center'>{product.compareAtPrice !== undefined  ? product.compareAtPrice + " ETB" : "---"} </div>
+            <div className='text-sm text-center'>{product.price + " ETB"} </div>
+            <div className='col-span-2 flex justify-center  space-x-2 h-fit text-xs text-gray-700 font-semibold'>
+                <button onClick={() => navigate(`/products/${product.slug}/edit`)} className='px-3 py-1 rounded-lg bg-gray-300 capitalize'>edit</button>
+                <button onClick={() => {
+                    console.log("delete clicked")
+                    setConfirmation(true)
+                }} className='px-3 py-1 rounded-lg bg-gray-300 capitalize'>delete</button>
             </div>
         </div>
     )

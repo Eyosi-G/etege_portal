@@ -1,17 +1,27 @@
 import React from 'react'
 
+import { UseFormRegister, FieldValues, RegisterOptions, FieldErrors, FieldValue, } from 'react-hook-form'
+
 interface IProps {
-    isRequired?: boolean
     title: string;
+    isRequired?: boolean;
+    name: string,
+    register: UseFormRegister<FieldValues>;
+    options?: RegisterOptions
+    errors: FieldErrors<FieldValues>
 }
+
 const InputField = (props: IProps) => {
+    const { title, isRequired, name, register, options, errors } = props
+    console.log(errors[name])
     return (
         <div>
             <p className='flex space-x-2 text-sm '>
-                <span>{props.title}</span>
-                {props.isRequired && <span className='text-red-500 '>*</span>}
+                <span>{title}</span>
+                {isRequired && <span className='text-red-500 '>*</span>}
             </p>
-            <input className=' w-full p-3 border border-gray-300 mt-2' />
+            <input {...register(name, options)} className={`w-full p-3 border border-gray-300 mt-2 `}/>
+            {errors && errors[name] && <div className='text-red-500 text-xs capitalize mt-1'>{errors[name]?.message?.toString()}</div>}
         </div>
     )
 }
