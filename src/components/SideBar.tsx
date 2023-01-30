@@ -10,10 +10,10 @@ const SideBar = () => {
   const { data: userData } = useAppSelector(state => state.user)
   const dispatch = useAppDispatch()
   const menus = <div className='space-y-4'>
-    <div className='space-x-3  items-center py-2 px-3 flex justify-between md:hidden'>
-      <div >{userData?.email}</div>
+    <div className='space-x-3  text-xs items-center py-2 px-3 flex justify-between md:hidden'>
+      <div className='' >{userData?.email}</div>
       <button onClick={() => { dispatch(logout()) }} className='flex space-x-2 items-center  px-5 py-2 bg-black text-white rounded-full'>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-4 h-4 md:w-6 md:h-6">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
         </svg>
         <div>
@@ -84,8 +84,8 @@ const SideBar = () => {
     />
   </div>
   return (
-    <>
-      <div className='bg-gray-100 rounded-t-lg py-4 px-2 justify-end flex md:hidden'>
+    <div className=''>
+      <div className='bg-gray-100 rounded-t-lg py-4 px-2 justify-end flex md:hidden '>
         {!openMenu && <button onClick={() => setOpenMenu(true)} >
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9h16.5m-16.5 6.75h16.5" />
@@ -103,7 +103,7 @@ const SideBar = () => {
         </div>
         <div className='hidden md:block'>{menus}</div>
       </div>
-    </>
+    </div>
   )
 }
 

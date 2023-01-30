@@ -7,7 +7,7 @@ interface IProps {
 }
 const SalesPersonTable = (props: IProps) => {
     return (
-        <div className='w-full mt-5 border border-gray-300 rounded-lg p-4'>
+        <div className=' mt-5 border w-full border-gray-300 rounded-lg p-4'>
             <div className='grid grid-cols-6 uppercase text-sm text-gray-500 gap-2 border-b pb-3 border-b-gray-300'>
                 <div className='col-span-3'>Name</div>
                 <div className='col-span-2 text-center'>Status</div>

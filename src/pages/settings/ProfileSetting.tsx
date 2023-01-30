@@ -67,14 +67,14 @@ const ProfileSetting = () => {
                 }))
 
             })} className='grid grid-cols-12 gap-2 '>
-                <div className='col-span-7'>
+                <div className='col-span-full md:col-span-7'>
                     <div className="text-lg mb-2">Company Information</div>
                     <div className='space-y-3'>
                         <InputField errors={errors} register={register} name="companyEmail" title='Email' isRequired />
                         <InputField errors={errors} register={register} name="companyAddress" title='Address' isRequired />
                     </div>
                 </div>
-                <div className='col-span-5'>
+                <div className='col-span-full md:col-span-5'>
                     <div>
                         <div className="text-lg mb-2">Admin Information</div>
                         <div className='space-y-3'>
