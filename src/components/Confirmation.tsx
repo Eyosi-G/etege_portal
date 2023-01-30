@@ -5,8 +5,8 @@ interface IProps {
 const Confirmation = (props: IProps) => {
     const { handleCancel, handleDelete } = props
     return (
-        <div className="flex items-center justify-center fixed top-0 right-0 bottom-0 left-0 z-50 ">
-            <div className="bg-white p-4 rounded-md">
+        <div className="flex items-center justify-center fixed  right-5 left-5 top-0 md:right-0 bottom-0 md:left-0 z-50 ">
+            <div className="bg-white py-5 px-10 rounded-md">
                 <div className="flex justify-center">
                     <span className="bg-red-100 text-red-700 p-4 rounded-full">
                         <svg
@@ -26,7 +26,7 @@ const Confirmation = (props: IProps) => {
                     </span>
                 </div>
                 <div className="text-2xl text-center font-semibold">Are you sure ?</div>
-                <div className="text-lg text-gray-500 text-center">
+                <div className=" text-gray-500 text-center text-sm">
                     Are you sure you want to delete this item ? You can't undo this
                     action.
                 </div>

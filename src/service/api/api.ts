@@ -6,7 +6,7 @@ import { baseUrl } from '../common';
 
 export const api = createApi({
     reducerPath: 'api',
-    tagTypes: ["categories", "products", "product"],
+    tagTypes: ["categories", "products", "product", "order", "company-profile", "sales-persons"],
     baseQuery: fetchBaseQuery({
         baseUrl,
     }),

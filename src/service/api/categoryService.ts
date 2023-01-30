@@ -6,6 +6,27 @@ export interface ICategory {
     name: string;
     id: number;
 }
+
+export interface ICreateCategoryRequest {
+    name: string;
+    token: string;
+}
+
+export interface IDeleteCategoryRequest {
+    id: number;
+    token: string;
+}
+
+export interface IDeleteCategoryRequest {
+    id: number;
+    token: string;
+}
+
+
+export interface IEditCategoryRequest extends ICategory {
+    token: string;
+}
+
 export interface IFetchCategoryResponse {
     categories: ICategory[],
     total: number
@@ -23,35 +44,44 @@ const categoryService = api.injectEndpoints({
                     }
                     if (data?.limit !== undefined) {
                         queries.push(`limit=${data.limit}`)
-
                     }
+
                     return `categories?${queries.join("&")}`
                 },
                 providesTags: ["categories"]
             }),
-            createCategory: build.mutation<void, string>({
-                query: (name) => ({
+            createCategory: build.mutation<void, ICreateCategoryRequest>({
+                query: (data) => ({
                     url: "categories",
                     method: "POST",
                     body: {
-                        name
+                        name: data.name
+                    },
+                    headers: {
+                        "authorization": data.token
                     }
                 }),
                 invalidatesTags: ["categories"]
             }),
-            deleteCategory: build.mutation<void, number>({
-                query: (id) => ({
-                    url: `categories/${id}`,
+            deleteCategory: build.mutation<void, IDeleteCategoryRequest>({
+                query: (data) => ({
+                    url: `categories/${data.id}`,
                     method: "DELETE",
+                    headers: {
+                        "authorization": data.token
+                    }
                 }),
                 invalidatesTags: ["categories"]
             }),
-            editCategory: build.mutation<void, ICategory>({
-                query: ({ id, name }) => ({
+            editCategory: build.mutation<void, IEditCategoryRequest>({
+                query: ({ id, name, token }) => ({
                     url: `categories/${id}`,
                     method: "PATCH",
                     body: {
                         name
+                    },
+                    headers: {
+                        "authorization": token
                     }
                 }),
                 invalidatesTags: ["categories"]

@@ -1,11 +1,14 @@
+import { skipToken } from '@reduxjs/toolkit/dist/query'
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Layout from '../components/Layout'
 import CustomerInformation from '../components/orders/CustomerInformation'
 import OrderDetailTable from '../components/orders/OrderDetailTable'
+import { useFetchSingleOrderQuery } from '../service/api/orderService'
 
 const OrderDetailPage = () => {
-    //"ORDERED" | "OUT_OF_STOKE" | "IN_TRANSIT" | "DELIVERED" | "CANCELED";
+    const { id } = useParams()
+    const { data } = useFetchSingleOrderQuery(id ? id : skipToken)
     const navigate = useNavigate()
     return (
         <>
@@ -18,7 +21,7 @@ const OrderDetailPage = () => {
                     </button>
                     <div>
                         <div className='text-sm text-gray-600'>Back to order list</div>
-                        <div className='font-bold text-xl'>ST7280283</div>
+                        <div className='font-bold text-xl'>{data?.slug}</div>
                     </div>
                 </div>
             </div>
@@ -26,12 +29,12 @@ const OrderDetailPage = () => {
                 <div className='col-span-8'>
                     <div>
                         <div className='font-bold text-xl'>Order Details</div>
-                        <OrderDetailTable />
+                        {data?.orderDetails && <OrderDetailTable orderDetails={data?.orderDetails} />}
                     </div>
                 </div>
                 <div className='col-span-4'>
                     <div className='font-bold text-xl'>Customer Information</div>
-                    <CustomerInformation />
+                    {data && <CustomerInformation order={data} />}
                 </div>
             </div>
         </>

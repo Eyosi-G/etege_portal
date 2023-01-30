@@ -11,11 +11,15 @@ import { ICategory, useGetCategoriesQuery } from '../service/api/categoryService
 import { skipToken } from '@reduxjs/toolkit/query'
 
 import { ICreateProductRequest, IUpdateProductRequest, useCreateProductMutation, useGetProductQuery, useUpdateProductMutation } from '../service/api/productService'
+import { useAppSelector } from '../hooks/redux-hook'
 interface ICreateProductInputField extends FieldValues {
     description: string,
     price: number,
     compareAtPrice: number
     name: string;
+    age?: string
+    isSoldOut: boolean;
+
 }
 interface IProps {
     isEdit?: boolean;
@@ -23,18 +27,21 @@ interface IProps {
 const AddEditProductPage = (props: IProps) => {
     const navigate = useNavigate()
     const { data, isSuccess } = useGetCategoriesQuery(undefined)
+    const { data: userData } = useAppSelector(state => state.user)
     const [categories, setCategories] = useState<ICategory[]>([])
     const [category, setCategory] = useState<ICategory>()
     const [isCategoryTouched, setCategoryTouched] = useState(false)
     const [isImagesTouched, setImagesTouched] = useState(false)
     const imageRef = useRef<HTMLInputElement | null>(null);
     const [images, setImages] = useState<(File | string)[]>([])
-    const { register, setValue, watch, formState: { errors }, handleSubmit } = useForm<FieldValues>({
+    const { register, setValue, getValues, watch, formState: { errors }, handleSubmit } = useForm<FieldValues>({
         defaultValues: {
             name: "",
             description: "",
             price: "",
             compareAtPrice: "",
+            age: "",
+            isSoldOut: false
         }
     })
 
@@ -46,6 +53,8 @@ const AddEditProductPage = (props: IProps) => {
             setValue("name", product.name);
             setValue("description", product.description);
             setValue("price", product.price)
+            setValue("age", product.age)
+            setValue("isSoldOut", product.isSoldOut);
             setValue("compareAtPrice", product.compareAtPrice);
             setCategories(product.categories)
             setImages(product.images)
@@ -85,7 +94,7 @@ const AddEditProductPage = (props: IProps) => {
 
             <form onSubmit={handleSubmit((data) => {
                 const _data: ICreateProductInputField = data as ICreateProductInputField;
-                if (categories.length === 0 || images.length === 0) {
+                if (categories.length === 0 || images.length === 0 || !userData) {
                     return
                 }
                 if (props.isEdit && product) {
@@ -99,8 +108,12 @@ const AddEditProductPage = (props: IProps) => {
                         price: _data.price,
                         compareAtPrice: _data.compareAtPrice,
                         name: _data.name,
-                        toBeUpdatedImages
+                        age: _data.age ? _data.age.split(",").map(item => item.trim()).join(", ") : _data.age,
+                        token: userData.token,
+                        toBeUpdatedImages,
+                        isSoldOut: _data.isSoldOut
                     }
+                    console.log(updateProductRequest)
                     updateProductHandler(updateProductRequest)
                     return
                 }
@@ -110,10 +123,13 @@ const AddEditProductPage = (props: IProps) => {
                     description: _data.description,
                     images: images as File[],
                     price: _data.price,
-                    compareAtPrice: _data.compareAtPrice
+                    age: _data.age,
+                    compareAtPrice: _data.compareAtPrice,
+                    token: userData.token,
+                    isSoldOut: _data.isSoldOut
                 }
                 createProductHandler(createProductRequest)
-            })} className='grid grid-cols-2 mt-5 gap-2'>
+            })} className='grid grid-cols-1 md:grid-cols-2 mt-5 gap-2'>
                 <div >
                     <div>
                         <div className="text-lg mb-2">Name</div>
@@ -260,8 +276,23 @@ const AddEditProductPage = (props: IProps) => {
                                 }} />
                         </div>
                     </div>
+                    <div className='mt-5'>
+                        <div className="text-lg mb-2">Age</div>
+                        <InputField
+                            errors={errors}
+                            register={register}
+                            name='age'
+                            title="Age Groups"
+                            placeholder='12, 13, 14'
+                        />
+                    </div>
+
+                    <div className='mt-5'>
+                        <div className="text-lg mb-2">Is Sold Out ?</div>
+                        <input  type="checkbox"  {...register("isSoldOut")} className={`p-3 border border-gray-300 mt-2 `} />
+                    </div>
                     <div className='flex justify-end items-center space-x-5 h-fit my-4'>
-                        <button className='px-3 py-2 rounded-lg border border-gray-300 '>Discard</button>
+                        <button onClick={()=> navigate(-1)} className='px-3 py-2 rounded-lg border border-gray-300 '>Discard</button>
                         <button onClick={() => {
                             setCategoryTouched(true)
                             setImagesTouched(true)

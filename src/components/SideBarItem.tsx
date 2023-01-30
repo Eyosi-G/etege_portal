@@ -14,7 +14,7 @@ interface INavData {
 
 const SideBarItem = (props: IProps) => {
   return (
-    <NavLink  end={props.isExact}  to={props.to} className={(navData: INavData) => `flex items-center space-x-2 p-3 rounded-lg ${navData.isActive ? "text-white bg-black" : "bg-white"}`}>
+    <NavLink  end={props.isExact}  to={props.to} className={(navData: INavData) => `flex items-center space-x-2 p-3 rounded-lg ${navData.isActive ? "text-white bg-black" : "bg-gray-50 md:bg-white "}`}>
       {props.icon}
       <div>{props.text}</div>
     </NavLink>

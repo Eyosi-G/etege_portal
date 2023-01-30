@@ -1,19 +1,38 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useAppSelector } from '../../hooks/redux-hook';
+import { IOrderDetail, useUpdateOrderStatusMutation } from '../../service/api/orderService'
+import Confirmation from '../Confirmation';
+import Modal from '../Modal';
 
-const OrderDetailTableRow = () => {
+interface IProps {
+    orderDetail: IOrderDetail
+}
+const OrderDetailTableRow = (props: IProps) => {
+    const { orderDetail } = props;
+    const [status, setStatus] = useState(orderDetail.status)
+    const { data: userData } = useAppSelector(state => state.user)
+    const [updateOrderStatus] = useUpdateOrderStatusMutation()
+
+
+    useEffect(() => {
+        if (!userData) return
+        updateOrderStatus({ status, id: orderDetail.id, token: userData.token });
+    }, [status, userData])
+
     return (
-        <div className='grid grid-cols-8 items-center mt-5 text-sm gap-2'>
-            <div>67328STE</div>
-            <div className='col-span-2'>Organic Moisturizer</div>
-            <div>x2</div>
-            <div>200 ETB</div>
-            <div>400 ETB</div>
+        <div className='grid grid-cols-7 items-center mt-5 text-sm gap-2'>
+        
+            <div className='col-span-2 capitalize'>{orderDetail.productName}</div>
+            <div>{`${orderDetail.quantity}`}</div>
+            <div>{`${orderDetail.price} ETB`}</div>
+            <div>{`${orderDetail.total.toFixed(2)} ETB`}</div>
             <div className='col-span-2'>
                 <div className='pr-2 border w-fit'>
-                    <select className='p-2 outline-none bg-white'>
-                        <option>Proccessing</option>
-                        <option>Delivered</option>
-                        <option>Canceled</option>
+                    <select onChange={(e) => setStatus(e.target.value)} value={status} className='p-2 outline-none bg-white'>
+                        <option value="PENDING">Pending</option>
+                        <option value="PROCESSING">Proccessing</option>
+                        <option value="DELIVERED">Delivered</option>
+                        <option value="CANCELED">Cancelled</option>
                     </select>
                 </div>
             </div>

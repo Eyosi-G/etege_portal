@@ -9,10 +9,12 @@ interface IProps {
     register: UseFormRegister<FieldValues>;
     options?: RegisterOptions
     errors: FieldErrors<FieldValues>
+    placeholder?: string;
+    type?: string;
 }
 
 const InputField = (props: IProps) => {
-    const { title, isRequired, name, register, options, errors } = props
+    const { type, title, isRequired, name, register, options, errors, placeholder } = props
     console.log(errors[name])
     return (
         <div>
@@ -20,8 +22,8 @@ const InputField = (props: IProps) => {
                 <span>{title}</span>
                 {isRequired && <span className='text-red-500 '>*</span>}
             </p>
-            <input {...register(name, options)} className={`w-full p-3 border border-gray-300 mt-2 `}/>
-            {errors && errors[name] && <div className='text-red-500 text-xs capitalize mt-1'>{errors[name]?.message?.toString()}</div>}
+            <input type={type} placeholder={placeholder} {...register(name, options)} className={`w-full p-3 border border-gray-300 mt-2 `}/>
+            {errors && errors[name] && <div className='text-red-500 text-xs capitalize mt-1 text-left'>{errors[name]?.message?.toString()}</div>}
         </div>
     )
 }
