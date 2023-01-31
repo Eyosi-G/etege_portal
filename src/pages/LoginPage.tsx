@@ -59,7 +59,7 @@ const LoginPage = () => {
         </div>
         <InputField errors={errors} name="email" register={register} title="Email" isRequired />
         <InputField errors={errors} name="password" register={register} title="Password" isRequired type='password' />
-        {isError && <ErrorMessage message={(error as IError).data.message} />}
+        {isError && <ErrorMessage message={ (error as IError).data.message} />}
         <button type='submit' className={`outline-none bg-black tracking-widest text-sm w-full md:w-fit p-3 md:px-5 md:py-3 uppercase  text-white rounded-sm disabled:bg-gray-500 flex justify-center items-center`} disabled={isLoading}>
           {isLoading ? "Submitting..." : "Login"}
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="ml-2 w-4 h-4 md:w-6 md:h-6">

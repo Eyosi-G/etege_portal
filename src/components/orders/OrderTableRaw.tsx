@@ -29,15 +29,16 @@ const OrderTableRaw = (props: IProps) => {
 
                 }} />
             </Modal>
-            <div className='grid-cols-3 grid mt-5 gap-2 hover:cursor-pointer' onClick={() => { navigate(`/orders/details/${order.slug}`) }}>
+            <div className='grid-cols-5 grid mt-5 gap-2 hover:cursor-pointer' onClick={() => { navigate(`/orders/details/${order.slug}`) }}>
 
                 <div>{`${order.total.toFixed(2)} ETB`}</div>
                 <div className='flex items-center space-x-2'>
-                    <div>{orderAt}</div>
+                    <div className='min-w-fit'>{orderAt}</div>
                     {order.isNew && <div className='flex text-xs'>
                         <div className='bg-blue-700 rounded-lg px-2 py-1 text-white'>New</div>
                     </div>}
                 </div>
+                <div className='col-span-2'>{order.assignedTo ? order.assignedTo.email : "--"}</div>
                 <div className='flex  space-x-2 h-fit text-xs text-gray-700 font-semibold'>
                     {userData && ["ADMIN"].includes(userData.role) && <button onClick={(e) => {
                         e.stopPropagation()

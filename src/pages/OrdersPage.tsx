@@ -40,7 +40,7 @@ const OrdersPage = () => {
                 {statusButton(OrderStatus.canceled, "Canceled")}
             </div>
             {isSuccess && data.orders.length === 0 && <NotFoundCollection message='No orders found'/>}
-            {isSuccess && data.orders.length > 0 && <OrdersTable orders={data.orders} />}
+            {isSuccess && data.orders.length > 0 && <div className="overflow-auto"><OrdersTable orders={data.orders} /></div>}
             {
                 isSuccess && data.orders.length > 0 && <div className='flex justify-center'>
                     <Paginator limit={limit} page={page} total={data.total} updatePage={(prev) => setPage(prev)} />

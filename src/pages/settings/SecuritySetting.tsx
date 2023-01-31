@@ -50,9 +50,9 @@ const SecuritySetting = () => {
 
             <div className="text-lg mb-2">Change Password</div>
             <div className='space-y-3'>
-                <InputField name='oldPassword' errors={errors} register={register} title='Old Password' isRequired />
-                <InputField name='newPassword' errors={errors} register={register} title='New Password' isRequired />
-                <InputField name='confirmNewPassword' errors={errors} register={register} title='Confirm New Password' isRequired />
+                <InputField type='password' name='oldPassword' errors={errors} register={register} title='Old Password' isRequired />
+                <InputField type='password' name='newPassword' errors={errors} register={register} title='New Password' isRequired />
+                <InputField type='password' name='confirmNewPassword' errors={errors} register={register} title='Confirm New Password' isRequired />
             </div>
             <div className='flex justify-end items-center space-x-5 h-fit my-2'>
                 <button type='button' className='px-3 py-2 rounded-lg border border-gray-300' onClick={() => navigate(-1)} >Discard</button>

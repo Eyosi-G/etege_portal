@@ -46,7 +46,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/orders/details/:id",
-        element: <PrivateRoute roles={["ADMIN"]}>
+        element: <PrivateRoute roles={["ADMIN", "SELLS"]}>
           <OrderDetailPage />
         </PrivateRoute>
       },

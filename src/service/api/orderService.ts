@@ -1,5 +1,6 @@
 import { IPagination } from "../common";
 import { api } from "./api";
+import { ISalesPerson } from "./salesPersonService";
 interface IOrderRequest extends IPagination {
     status?: string;
     token: string;
@@ -16,7 +17,8 @@ export interface IOrder {
     orderDetails: IOrderDetail[]
     total: number
     orderDate: Date
-    slug: string
+    slug: string;
+    assignedTo?: ISalesPerson
 }
 export interface IOrderDetail {
     id: number;
@@ -42,6 +44,12 @@ export interface IOrderStatResponse {
 export interface IUpdateOrderStatus {
     status: string;
     id: number;
+    token: string;
+}
+
+export interface IAssignOrderRequest {
+    orderId: number;
+    salesPersonId: number;
     token: string;
 }
 
@@ -112,13 +120,27 @@ const orderService = api.injectEndpoints({
                 })
             }),
             deleteOrder: build.mutation<void, IDeleteOrderRequest>({
-                query: ({token, id}) => ({
+                query: ({ token, id }) => ({
                     url: `orders/${id}`,
                     method: "DELETE",
                     headers: {
                         "authorization": token
                     }
                 })
+            }),
+            assignOrder: build.mutation<void, IAssignOrderRequest>({
+                query: (data) => ({
+                    url: 'orders/assign-salesman',
+                    method: "PATCH",
+                    body: {
+                        orderId: data.orderId,
+                        salesPersonId: data.salesPersonId
+                    },
+                    headers: {
+                        "authorization": data.token
+                    }
+                }),
+
             })
         }
     },
@@ -130,5 +152,6 @@ export const {
     useFetchSingleOrderQuery,
     useUpdateOrderStatusMutation,
     useFetchOrderStatisticsQuery,
-    useDeleteOrderMutation
+    useDeleteOrderMutation,
+    useAssignOrderMutation
 } = orderService

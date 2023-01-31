@@ -8,7 +8,7 @@ const SettingLayout = () => {
             <div className='col-span-full md:col-span-3 ml-10 md:ml-0'>
                 <SettingsSideBar />
             </div>
-            <div className='col-span-full md:col-span-9 '>
+            <div className='col-span-full md:col-span-9 mt-10 md:mt-0 '>
                 <Outlet />
             </div>
         </div>

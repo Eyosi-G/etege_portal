@@ -7,10 +7,11 @@ interface IProps {
 }
 const OrdersTable = (props: IProps) => {
     return (
-        <div className='border border-gray-300 rounded-lg p-4'>
-            <div className='grid-cols-3 grid uppercase text-sm text-gray-500 gap-2 border-b pb-3 border-b-gray-300'>
+        <div className='border border-gray-300 rounded-lg p-4 w-[800px] md:w-full overflow-x-auto '>
+            <div className='grid-cols-5 grid uppercase text-sm text-gray-500 gap-2 border-b pb-3 border-b-gray-300'>
                 <div>Total</div>
                 <div>Created</div>
+                <div className='col-span-2'>Assigned To</div>
                 <div>Actions</div>
             </div>
             <div>
